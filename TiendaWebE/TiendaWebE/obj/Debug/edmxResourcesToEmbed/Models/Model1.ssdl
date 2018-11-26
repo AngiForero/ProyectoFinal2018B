@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TiendaEscritorioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="ClienteCodigoId" />
+    </Key>
+    <Property Name="ClienteCodigoId" Type="int" Nullable="false" />
+    <Property Name="NombreCliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApellidoCliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="CedulaCliente" Type="int" />
+    <Property Name="DireccionCliente" Type="nvarchar" MaxLength="50" />
+    <Property Name="TelefonoCliente" Type="int" />
+  </EntityType>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="CompraId" />
+    </Key>
+    <Property Name="CompraId" Type="int" Nullable="false" />
+    <Property Name="NombreDelProducto" Type="nvarchar" MaxLength="50" />
+    <Property Name="CantidadCompra" Type="int" />
+    <Property Name="TotalCompraId" Type="int" />
+    <Property Name="FechaCompra" Type="datetime" />
+    <Property Name="CodigoPId" Type="int" />
+    <Property Name="ProvedorCodigoId" Type="int" />
+  </EntityType>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="EmpleadoCodigoId" />
+    </Key>
+    <Property Name="EmpleadoCodigoId" Type="int" Nullable="false" />
+    <Property Name="NombreEmpleado" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApellidoEmpleado" Type="nvarchar" MaxLength="50" />
+    <Property Name="CedulaEmpleado" Type="int" />
+    <Property Name="TelefonoEmpleado" Type="int" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="CodigoPId" />
+    </Key>
+    <Property Name="CodigoPId" Type="int" Nullable="false" />
+    <Property Name="NombreProducto" Type="nvarchar" MaxLength="50" />
+    <Property Name="ValorProducto" Type="int" />
+    <Property Name="cantidad" Type="int" />
+  </EntityType>
+  <EntityType Name="Provedor">
+    <Key>
+      <PropertyRef Name="ProvedorCodigoId" />
+    </Key>
+    <Property Name="ProvedorCodigoId" Type="int" Nullable="false" />
+    <Property Name="NombreProvedor" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApellidoProvedor" Type="nvarchar" MaxLength="50" />
+    <Property Name="CedulaProvedor" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Venta">
+    <Key>
+      <PropertyRef Name="VentaProductoId" />
+    </Key>
+    <Property Name="VentaProductoId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CantidadVenta" Type="int" />
+    <Property Name="TotalVenta" Type="int" />
+    <Property Name="FechaVenta" Type="datetime" />
+    <Property Name="ClienteCoId" Type="int" />
+    <Property Name="EmpleadoId" Type="int" />
+    <Property Name="CodigoPId" Type="int" />
+  </EntityType>
+  <Association Name="ClienteCoId_FK">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="ClienteCodigoId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="ClienteCoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CodigoPId_FK">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="CodigoPId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="CodigoPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmpleadoId_FK">
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="EmpleadoCodigoId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="EmpleadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_producto_Venta">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="CodigoPId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="CodigoPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProvedorCodigoId_FK">
+    <End Role="Provedor" Type="Self.Provedor" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provedor">
+        <PropertyRef Name="ProvedorCodigoId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="ProvedorCodigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TiendaEscritorioModelStoreContainer">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Provedor" EntityType="Self.Provedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="ClienteCoId_FK" Association="Self.ClienteCoId_FK">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="CodigoPId_FK" Association="Self.CodigoPId_FK">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="EmpleadoId_FK" Association="Self.EmpleadoId_FK">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="FK_producto_Venta" Association="Self.FK_producto_Venta">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="ProvedorCodigoId_FK" Association="Self.ProvedorCodigoId_FK">
+      <End Role="Provedor" EntitySet="Provedor" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

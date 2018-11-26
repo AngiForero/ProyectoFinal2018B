@@ -1,0 +1,13 @@
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\bin\Debug\TiendaEscritorio.exe
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\bin\Debug\TiendaEscritorio.pdb
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.csprojAssemblyReference.cache
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.Form1.resources
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.Properties.Resources.resources
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.csproj.GenerateResource.cache
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.csproj.CoreCompileInputs.cache
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.exe
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.pdb
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.AdicionarCliente.resources
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.AdicionarCompra.resources
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.AdicionarProducto.resources
+C:\Users\angie\source\repos\TiendaEscritorio\TiendaEscritorio\obj\Debug\TiendaEscritorio.AdicionarVenta.resources

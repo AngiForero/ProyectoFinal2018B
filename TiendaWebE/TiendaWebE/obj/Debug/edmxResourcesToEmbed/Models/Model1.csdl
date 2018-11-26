@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TiendaEscritorioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="ClienteCodigoId" />
+    </Key>
+    <Property Name="ClienteCodigoId" Type="Int32" Nullable="false" />
+    <Property Name="NombreCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApellidoCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CedulaCliente" Type="Int32" />
+    <Property Name="DireccionCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TelefonoCliente" Type="Int32" />
+    <NavigationProperty Name="Venta" Relationship="Self.ClienteCoId_FK" FromRole="Cliente" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="CompraId" />
+    </Key>
+    <Property Name="CompraId" Type="Int32" Nullable="false" />
+    <Property Name="NombreDelProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CantidadCompra" Type="Int32" />
+    <Property Name="TotalCompraId" Type="Int32" />
+    <Property Name="FechaCompra" Type="DateTime" Precision="3" />
+    <Property Name="CodigoPId" Type="Int32" />
+    <Property Name="ProvedorCodigoId" Type="Int32" />
+    <NavigationProperty Name="Producto" Relationship="Self.CodigoPId_FK" FromRole="Compra" ToRole="Producto" />
+    <NavigationProperty Name="Provedor" Relationship="Self.ProvedorCodigoId_FK" FromRole="Compra" ToRole="Provedor" />
+  </EntityType>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="EmpleadoCodigoId" />
+    </Key>
+    <Property Name="EmpleadoCodigoId" Type="Int32" Nullable="false" />
+    <Property Name="NombreEmpleado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApellidoEmpleado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CedulaEmpleado" Type="Int32" />
+    <Property Name="TelefonoEmpleado" Type="Int32" />
+    <NavigationProperty Name="Venta" Relationship="Self.EmpleadoId_FK" FromRole="Empleado" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="CodigoPId" />
+    </Key>
+    <Property Name="CodigoPId" Type="Int32" Nullable="false" />
+    <Property Name="NombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ValorProducto" Type="Int32" />
+    <Property Name="cantidad" Type="Int32" />
+    <NavigationProperty Name="Compra" Relationship="Self.CodigoPId_FK" FromRole="Producto" ToRole="Compra" />
+    <NavigationProperty Name="Venta" Relationship="Self.FK_producto_Venta" FromRole="Producto" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Provedor">
+    <Key>
+      <PropertyRef Name="ProvedorCodigoId" />
+    </Key>
+    <Property Name="ProvedorCodigoId" Type="Int32" Nullable="false" />
+    <Property Name="NombreProvedor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApellidoProvedor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CedulaProvedor" Type="Int32" />
+    <NavigationProperty Name="Compra" Relationship="Self.ProvedorCodigoId_FK" FromRole="Provedor" ToRole="Compra" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Venta">
+    <Key>
+      <PropertyRef Name="VentaProductoId" />
+    </Key>
+    <Property Name="VentaProductoId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CantidadVenta" Type="Int32" />
+    <Property Name="TotalVenta" Type="Int32" />
+    <Property Name="FechaVenta" Type="DateTime" Precision="3" />
+    <Property Name="ClienteCoId" Type="Int32" />
+    <Property Name="EmpleadoId" Type="Int32" />
+    <Property Name="CodigoPId" Type="Int32" />
+    <NavigationProperty Name="Cliente" Relationship="Self.ClienteCoId_FK" FromRole="Venta" ToRole="Cliente" />
+    <NavigationProperty Name="Empleado" Relationship="Self.EmpleadoId_FK" FromRole="Venta" ToRole="Empleado" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_producto_Venta" FromRole="Venta" ToRole="Producto" />
+  </EntityType>
+  <Association Name="ClienteCoId_FK">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="ClienteCodigoId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="ClienteCoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CodigoPId_FK">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="CodigoPId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="CodigoPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProvedorCodigoId_FK">
+    <End Role="Provedor" Type="Self.Provedor" Multiplicity="0..1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provedor">
+        <PropertyRef Name="ProvedorCodigoId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="ProvedorCodigoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmpleadoId_FK">
+    <End Role="Empleado" Type="Self.Empleado" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleado">
+        <PropertyRef Name="EmpleadoCodigoId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="EmpleadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_producto_Venta">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="CodigoPId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="CodigoPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TiendaEscritorioEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Compra" EntityType="Self.Compra" />
+    <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <EntitySet Name="Provedor" EntityType="Self.Provedor" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Venta" EntityType="Self.Venta" />
+    <AssociationSet Name="ClienteCoId_FK" Association="Self.ClienteCoId_FK">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="CodigoPId_FK" Association="Self.CodigoPId_FK">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="ProvedorCodigoId_FK" Association="Self.ProvedorCodigoId_FK">
+      <End Role="Provedor" EntitySet="Provedor" />
+      <End Role="Compra" EntitySet="Compra" />
+    </AssociationSet>
+    <AssociationSet Name="EmpleadoId_FK" Association="Self.EmpleadoId_FK">
+      <End Role="Empleado" EntitySet="Empleado" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+    <AssociationSet Name="FK_producto_Venta" Association="Self.FK_producto_Venta">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Venta" EntitySet="Venta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
